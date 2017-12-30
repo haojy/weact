@@ -12,7 +12,7 @@ weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中�
 ---
 - [ 安装 ](#安装)
 - [ JSX小程序 ](#JSX小程序)
-- [ 生成小程序 ](#生成小程序)
+- [ 生成小程序 ](#生成小程序)
 - [ 从JSX到WXML ](#从JSX到WXML)
 - [ App.jsx ](#App.jsx)
 - [ Page.jsx ](#Page.jsx)
@@ -226,7 +226,7 @@ export default class extends Page {
 ### 模版==函数式Component
 ---
 
-小程序的模版可以理解成，没有状态的函数式Component。weact会把返回JSX标签的函数编译成模版，使用这类组件时，只要确保import的名字和定义的一样就可以。
+小程序的模版可以理解成，没有状态的函数式Component。weact会把返回JSX标签的函数编译成模版，使用这类组件时，只要确保import的名字和定义的一样就可以。
 
 ```javascript
 // src/components/flex.jsx
@@ -278,10 +278,10 @@ export default class extends Page {
 
 import方式 | JS/JSX | 小程序
 ----------|--------|-------
-模块间 | `import reducer from './reducer'` | `var _reducer = require("./reducer.js");`
+模块间 | `import reducer from './reducer'` | `var _reducer = require("./reducer.js");`
 NPM包 | `import redux from 'redux'` | `var _redux = require("modules/redux.js");` 
-引用Page | `import './pages/index.jsx'` | *app.json* `{"pages":["pages/index/index"]}`
-引用Component | `import Component from '../components/Component.jsx'` | *\*.json*: `{"usingComponents":{"Component":"../../components/Component/Component"}}`
-引用Template | `import MsgItem from './MsgItem.jsx'` | *wxml* `<import src="../MsgItem.wxml" />` 
+引用Page | `import './pages/index.jsx'` | *app.json* `{"pages":["pages/index/index"]}`
+引用Component | `import Component from '../components/Component.jsx'` | *\*.json*: `{"usingComponents":{"Component":"../../components/Component/Component"}}`
+引用Template | `import MsgItem from './MsgItem.jsx'` | *wxml* `<import src="../MsgItem.wxml" />` 
 
-> 引用的NPM包需用npm或yarn安装 
+> 引用的NPM包需用npm或yarn安装 

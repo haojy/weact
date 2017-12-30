@@ -25,6 +25,7 @@
     "wechat",
     "weixin",
     "minapp",
+    "小程序",
     "react"
   ],
   "dependencies": {

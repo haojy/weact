@@ -1,0 +1,62 @@
+{
+  "name": "weact-cli",
+  "version": "0.1.0",
+  "description": "用JSX快速开发小程序",
+  "main": "index.js",
+  "bin": "./bin/weact",
+  "scripts": {
+    "build": "rollup -c && chmod a+x bin/weact",
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {},
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "test/"
+    ]
+  },
+  "author": "Hao Jiayin",
+  "license": "MIT",
+  "keywords": [
+    "weact",
+    "jsx",
+    "weapp",
+    "wxapp",
+    "wechat",
+    "weixin",
+    "minapp",
+    "react"
+  ],
+  "dependencies": {
+    "@babel/core": "^7.0.0-beta.35",
+    "@babel/generator": "^7.0.0-beta.35",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.36",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.36",
+    "@babel/preset-env": "^7.0.0-beta.36",
+    "@babel/preset-react": "^7.0.0-beta.36",
+    "@babel/traverse": "^7.0.0-beta.35",
+    "@babel/types": "^7.0.0-beta.35",
+    "babylon": "^7.0.0-beta.35",
+    "chalk": "^2.3.0",
+    "debug": "^3.1.0",
+    "lodash": "^4.17.4",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "prettify-xml": "^1.2.0",
+    "rimraf": "^2.6.2",
+    "rollup": "0.51.3",
+    "rollup-plugin-babel": "^4.0.0-beta.0",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.36",
+    "eslint": "^4.14.0",
+    "eslint-plugin-react": "^7.5.1",
+    "jest": "^21.2.1",
+    "redux": "^3.7.2",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.2.2"
+  }
+}

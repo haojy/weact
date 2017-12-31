@@ -1,12 +1,23 @@
 # weact 用JSX快速开发小程序
 
+<p align="center">
+  <a href="https://travis-ci.org/haojy/weact">
+    <img src="https://travis-ci.org/haojy/weact.svg?branch=master"
+         alt="build status">
+  </a>
+
+  <a href="https://github.com/haojy/weact/blob/master/LICENSE">
+    <img src="https://img.shields.io/npm/l/rollup.svg"
+         alt="license">
+  </a>
+
+</p>
 weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中编写页面或组件，并把关联的JSX代码和引用包编译成小程序代码，然后在*小程序开发者工具*中调试代码。因为使用了JSX和ES标准语法，你可以轻松地把已有的JSX代码重构成小程序，当然你也可以使用喜欢的语法高亮，语法检查器等工具。支持
 * JSX，ES6/7标准语法
 * 单文件开发小程序模块
 * 引用NPM包
+* 自动添加组件关系
 * 在jsx文件中编写小程序样式WXSS
-
-> 当前版本处于alpha状态，weact会在进入beta后开源。
 
 ## 快速上手
 ---
@@ -27,7 +38,7 @@ weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中�
 在项目里安装,
 ```bash
 npm install -D weact-cli
-npx weact-cli
+npx weact
 # No app.jsx
 ```
 
@@ -36,7 +47,7 @@ npx weact-cli
 ```bash
 npm install -g weact-cli
 npm install babel-preset-env babel-preset-react babel-plugin-external-helpers babel-plugin-transform-class-properties babel-plugin-transform-object-rest-spread
-weact-cli
+weact
 # No app.jsx
 ```
 
@@ -92,7 +103,7 @@ export default class extends Page {
 
 上面的代码都存放在`./src`目录下，然后执行
 ```bash
-npx weact-cli ./src # 等同于 weact-cli ./src/app.jsx ./dist
+npx weact ./src # 等同于 weact ./src/app.jsx ./dist
 ```
 
 在当前目录下会生成`./dist`目录，里面全是根据jsx文件编译出的小程序代码，
@@ -269,8 +280,106 @@ export default class extends Page {
 
 ### 组件
 ---
-> TODO
 
+用weact自定组件更类似写*react Component*，像Page一样显示声明继承Compnent类就可以。组件的属性可以用`propTypes`和`defaultProps`来定义，分别对应着`properties[...].type`和`properties[...].value`。属性类型由`weact.PropTypes`定义如下
+
+PropTypes | 小程序属性类型
+----------|-------------
+*string* | *String*
+*number* | *Number*
+*bool* | *Boolean*
+*object* | *Object*
+*array* | *Array*
+
+在下面的例子里*a*，*b*就是组件属性。如果你了解*react*，你会比较熟悉这种定义Component的方式。 
+另外，自定义的方法和事件响应函数可以直接定义为类属性，weact在编译时把这些函数放在`methods`属性里。
+
+```javascript
+import { Component, PropTypes } from 'weact'
+export default class extends Component {
+  static propTypes = {
+    a: PropTypes.string
+    b: PropTypes.bool
+  }
+  static defaultProps = {
+    a: 'world',
+    b: true,
+  }
+  state = {
+    open: true,
+    x: 'hi',
+    item: {
+      index: 0,
+      time: '2016-09-15'
+    }
+  }
+
+  render() {
+    const { a, b } = this.props
+    const { open } = this.state
+    return (
+      <view>
+        <view x={b} y="str">hi {a} </view>
+        <view for={[1, 2, 3]} > </view>
+        <view for={array} for-index="i" for-item="node"> </view>
+      </view>
+    )
+  }
+}
+```
+
+#### 组件关系
+
+weact会根据父子组件的引用关系，自动编译出`relations`的定义。来看看下面的例子，父组件parent引用了子组件child。
+
+```javascript
+// ./parent.jsx
+import { Component, PropTypes } from 'weact'
+import child from './child.jsx'
+export default class extends Component {
+  render() {
+    return (
+      <view>
+        父级组件
+        <child />
+      </view>
+    )
+  }
+}
+```
+
+```javascript
+// ./child.jsx
+import { Component, PropTypes } from 'weact'
+export default class extends Component {
+  render() {
+    return (
+      <view>
+        子级组件
+      </view>
+    )
+
+  }
+}
+```
+
+weact编译后在各自的js文件里自动生成关系定义，而不用手动定义。
+```javascript
+// ./parent.js
+  relations: {
+    "../child/child": {
+      type: "child"
+    }
+  },
+```
+```javascript
+// ./child.js
+  relations: {
+    "../parent/parent": {
+      type: "parent"
+    }
+  },
+```
 ### 引用模块
 ---
 
@@ -284,4 +393,4 @@ NPM包 | `import redux from 'redux'` | `var _redux = require("modules/redux.js")
 引用Component | `import Component from '../components/Component.jsx'` | *\*.json*: `{"usingComponents":{"Component":"../../components/Component/Component"}}`
 引用Template | `import MsgItem from './MsgItem.jsx'` | *wxml* `<import src="../MsgItem.wxml" />` 
 
-> 引用的NPM包需用npm或yarn安装 
+> 引用的NPM包需用npm或yarn安装 

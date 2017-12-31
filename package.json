@@ -3,7 +3,14 @@
   "version": "0.1.0",
   "description": "用JSX快速开发小程序",
   "main": "index.js",
-  "bin": "./bin/weact",
+  "bin": {
+    "weact": "./bin/weact"
+  },
+  "repository": "haojy/weact",
+  "bugs": {
+    "url": "https://github.com/haojy/weact/issues"
+  },
+  "homepage": "https://github.com/haojy/weact",
   "scripts": {
     "build": "rollup -c && chmod a+x bin/weact",
     "test": "jest"
@@ -20,12 +27,12 @@
   "keywords": [
     "weact",
     "jsx",
+    "小程序",
     "weapp",
     "wxapp",
     "wechat",
     "weixin",
     "minapp",
-    "小程序",
     "react"
   ],
   "dependencies": {

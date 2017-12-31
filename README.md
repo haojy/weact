@@ -1,18 +1,9 @@
 # weact 用JSX快速开发小程序
 
-<p align="center">
-  <a href="https://travis-ci.org/haojy/weact">
-    <img src="https://travis-ci.org/haojy/weact.svg?branch=master"
-         alt="build status">
-  </a>
-  <a href="https://codecov.io/github/haojy/weact?branch=master">
-    <img src="https://codecov.io/gh/haojy/weact/branch/master/graph/badge.svg" alt="Coverage via Codecov" />
-  </a>
-  <a href="https://github.com/haojy/weact/blob/master/LICENSE">
-    <img src="https://img.shields.io/npm/l/rollup.svg"
-         alt="license">
-  </a>
-</p>
+[![travis-ci](https://travis-ci.org/haojy/weact.svg?branch=master)](https://travis-ci.org/haojy/weact)
+[![Code coverage](https://codecov.io/gh/haojy/weact/branch/master/graph/badge.svg)](https://codecov.io/github/haojy/weact?branch=master")
+[![Dependence](https://david-dm.org/haojy/weact/status.svg)](https://david-dm.org/haojy/weact)
+[![License](https://img.shields.io/npm/l/weact-cli.svg)](https://github.com/haojy/weact/blob/master/LICENSE)
 
 
 weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中编写页面或组件，并把关联的JSX代码和引用包编译成小程序代码，然后在*小程序开发者工具*中调试代码。因为使用了JSX和ES标准语法，你可以轻松地把已有的JSX代码重构成小程序，当然你也可以使用喜欢的语法高亮，语法检查器等工具。支持
@@ -197,7 +188,7 @@ export default class extends App {
 ---
 
 类似App.jsx，页面的[ 生命周期函数和其他属性 ](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/app-service/page.html)也写成Page的类属性。除此之外，
-- Page的`render()`函数定义页面显示，
+- Page的`render()`函数定义页面显示，
 - 标签使用参考[小程序基础组件](https://mp.weixin.qq.com/debug/wxadoc/dev/component/)
 - 组件的事件处理函数在Page中直接定义类函数
 
@@ -208,7 +199,7 @@ export default class extends Page {
     // 页面数据
   }
 
-  myData = '自定义公共变量',
+  myData = '自定义公共变量',
 
   handleTap() { console.log('自定义公共函数') }
 

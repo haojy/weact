@@ -5,7 +5,9 @@
     <img src="https://travis-ci.org/haojy/weact.svg?branch=master"
          alt="build status">
   </a>
-
+  <a href="https://codecov.io/github/haojy/weact?branch=master">
+    <img src="https://codecov.io/gh/haojy/weact/branch/master/graph/badge.svg" alt="Coverage via Codecov" />
+  </a>
   <a href="https://github.com/haojy/weact/blob/master/LICENSE">
     <img src="https://img.shields.io/npm/l/rollup.svg"
          alt="license">

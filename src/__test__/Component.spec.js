@@ -229,7 +229,7 @@ Component({
       id: path.resolve('./child.jsx'),
       code: child,
       sourcePath: './',
-      referencedBy: ['./parent.jsx']
+      referencedBy: ['../parent.jsx']
     })
 
     log([outputChild, expectedChild])

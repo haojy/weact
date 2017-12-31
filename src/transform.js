@@ -84,8 +84,9 @@ const transform = ({
               else if (
                 x.value.expression.type === 'Identifier' &&
                 v !== x.name.name
-              )
+              ) {
                 return all // attribute MUST be defined
+              }
               else all.push(`${x.name.name}: ${v}`)
             }
             return all
@@ -352,14 +353,14 @@ const transform = ({
           const objProps = []
           referencedBy.forEach(function(referencedId) {
             const { dir, name } = _path.parse(referencedId)
-            const componentPath = _path.join('..', _path.format({ dir, name }))
+            const componentPath = _path.format({ dir, name })
             ComponentRelations[componentPath] = { type: 'parent' }
           })
 
           Object.keys(ComponentRelations).forEach(key => {
-            // if (/pages/.test(key)) {
-            //   return // TODO more specific check
-            // }
+            if (/pages/.test(key)) {
+              return // TODO more specific check
+            }
             const { name } = _path.parse(key)
             const componentPath = _path.format({ dir: key, name })
             objProps.push(

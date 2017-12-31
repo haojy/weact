@@ -150,7 +150,7 @@ onXXX == bindxxx  | `<button onTap={this.handleTap}>Next</button>` | `<button bi
 ### App.jsx
 ---
 
-小程序在json文件中进行全局配置，用JSX把这些配置写成App的类属性，对比参考[ 小程序配置 ](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html)。同样，App的[ 生命周期函数，自定义公共变量，自定义公共函数等属性 ](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/app-service/app.html)都可以写成类属性。weact把app.jsx编译成对应的app.json，app.js, app.wxss。
+小程序在json文件中进行全局配置，用JSX把这些配置写成App的类属性，对比参考[ 小程序配置 ](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html)。同样，App的[ 生命周期函数，自定义公共变量，自定义公共函数等属性 ](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/app-service/app.html)都可以写成类属性。weact把app.jsx编译成对应的app.json，app.js, app.wxss。
 
 ```javascript
 export default class extends App {
@@ -179,11 +179,11 @@ export default class extends App {
     ],
   }
 
-  myData = '自定义公共变量',
+  myData = '自定义公共变量',
 
   hello() { return '自定义公共函数' }
 
-  // 生命周期函数
+  // 生命周期函数
   onLaunch() { console.log('app: hello world') }
   onShow() { console.log('app: yes, I am') }
   onHide() { console.log('app: just minutes') }
@@ -194,8 +194,8 @@ export default class extends App {
 ### Page.jsx
 ---
 
-类似App.jsx，页面的[ 生命周期函数和其他属性 ](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/app-service/page.html)也写成Page的类属性。除此之外，
-- Page的`render()`函数定义页面显示，
+类似App.jsx，页面的[ 生命周期函数和其他属性 ](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/app-service/page.html)也写成Page的类属性。除此之外，
+- Page的`render()`函数定义页面显示，
 - 标签使用参考[小程序基础组件](https://mp.weixin.qq.com/debug/wxadoc/dev/component/)
 - 组件的事件处理函数在Page中直接定义类函数
 
@@ -210,7 +210,7 @@ export default class extends Page {
 
   handleTap() { console.log('自定义公共函数') }
 
-  // 生命周期函数
+  // 生命周期函数
   onLoad() { console.log('page index: loading...') }
   onShow() { console.log('page index: yes, I am') }
   onReady() { console.log('page index: I am ready now') }
@@ -293,8 +293,8 @@ PropTypes | 小程序属性类型
 *object* | *Object*
 *array* | *Array*
 
-在下面的例子里*a*，*b*就是组件属性。如果你了解*react*，你会比较熟悉这种定义Component的方式。 
-另外，自定义的方法和事件响应函数可以直接定义为类属性，weact在编译时把这些函数放在`methods`属性里。
+在下面的例子里*a*，*b*就是组件属性。如果你了解*react*，你会比较熟悉这种定义Component的方式。 
+另外，自定义的方法和事件响应函数可以直接定义为类属性，weact在编译时把这些函数放在`methods`属性里。
 
 ```javascript
 import { Component, PropTypes } from 'weact'
@@ -332,7 +332,7 @@ export default class extends Component {
 
 #### 组件关系
 
-weact会根据父子组件的引用关系，自动编译出`relations`的定义。来看看下面的例子，父组件parent引用了子组件child。
+weact会根据父子组件的引用关系，自动编译出`relations`的定义。来看看下面的例子，父组件parent引用了子组件child。
 
 ```javascript
 // ./parent.jsx
@@ -365,7 +365,7 @@ export default class extends Component {
 }
 ```
 
-weact编译后在各自的js文件里自动生成关系定义，而不用手动定义。
+weact编译后在各自的js文件里自动生成关系定义，而不用手动定义。
 ```javascript
 // ./parent.js
   relations: {

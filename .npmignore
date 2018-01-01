@@ -1,14 +1,18 @@
 *node_modules*
 .vscode
+.travis.yml
+.eslintrc:w
+.yml
+.babelrc
 src
 vender
-test
 *.config.js
-.babelrc
+package*
 
 
 # testing
 coverage
+test
 
 # production
 build

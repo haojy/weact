@@ -8,8 +8,16 @@ import rollup from 'rollup'
 import rp_babel from 'rollup-plugin-babel'
 import { invert, remove } from 'lodash'
 
+import helpInfo from './help.zh.md'
+import { version } from '../package.json'
 import transform from './transform'
 
+const prompt = (str, ...rest) => console.log(
+  chalk.greenBright.bold(`${str}`, rest),
+)
+const help = () => {
+  console.log(`\n${helpInfo.replace('__VERSION__', version)}\n`)
+}
 const error = (str, ...rest) => console.log(
   chalk.red.bold(`[ERR] ${str}`, rest),
 )
@@ -25,6 +33,7 @@ const info = (type, str, ...rest) => console.log(
   chalk.cyanBright.bold(`[${INFO_TYPE[type]}]\t`),
   chalk.dim.bold(`${str}`, rest),
 )
+
 
 
 function copyNodeModule(name, target) {
@@ -148,8 +157,6 @@ async function build(sourcePath, targetPath) {
   const source = fs.statSync(sourcePath).isDirectory() ? path.join(sourcePath, 'app.jsx') : sourcePath
   const target = path.isAbsolute(targetPath) ? targetPath : path.resolve(targetPath)
 
-  // rimraf.sync(target)
-
   const {
     modules,
     referenced,
@@ -167,27 +174,38 @@ async function build(sourcePath, targetPath) {
   const command = minimist(process.argv.slice(2), {
     alias: {
       w: 'watch',
-      h: 'helper',
+      v: 'version',
+      h: 'help',
     }
   })
   const [sourcePath, targetPath = './dist'] = command._
 
-  if (!sourcePath) {
-    error('No app.jsx')
+  if (command.help || (process.argv.length <= 2 && process.stdin.isTTY)) {
+    help()
+    return
+  } else if (command.version) {
+    prompt(`weact 版本 ${version}`)
+    return
+  } else if (!sourcePath) {
+    prompt('请输入源码目录路径或app.jsx文件路径')
     return
   } else if (!targetPath) {
-    error('No target project path')
+    prompt('请输入生成小程序的目标路径，默认为当前目录下./dist')
     return
   }
 
   let modules = await build(sourcePath, targetPath)
+  const now = new Date
+  prompt(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] 生成${targetPath}`)
 
-  if (command.watcher) {
+  if (command.watch) {
     const watcher = chokidar.watch(Object.keys(modules))
 
     watcher.on('change', async function(path) {
       modules = await build(sourcePath, targetPath)
-      watcher.add(modules)
+      const now = new Date
+      prompt(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] 更新`)
+      watcher.add(Object.keys(modules))
     })
   }
 

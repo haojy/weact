@@ -1,3 +1,5 @@
+import string from 'rollup-plugin-string'
+import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import uglify from 'rollup-plugin-uglify'
 import { minify } from 'uglify-es'
@@ -12,6 +14,8 @@ export default {
     banner: '#!/usr/bin/env node',
   },
   plugins: [
+    json(),
+    string({ include: '**/*.md' }),
     commonjs({
       sourceMap: false,
       namedExports: {

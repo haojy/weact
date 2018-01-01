@@ -25,27 +25,17 @@ weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中�
 - [ 模版==函数式Component ](#模版==函数式Component)
 - [ 组件 ](#组件)
 - [ 引用模块 ](#引用模块)
+- [ 命令行用法 ](#命令行用法)
 
 
 ### 安装
 ---
 
-在项目里安装,
+在项目里安装*weact-cli*,
 ```bash
 npm install -D weact-cli
 npx weact
-# No app.jsx
 ```
-
-也可以全局安装weact客户端NPM包，同时也需要在执行目录安装相关babel插件，因为weact依赖这些插件，而babel只能识别当前模块路径下的插件。
-
-```bash
-npm install -g weact-cli
-npm install babel-preset-env babel-preset-react babel-plugin-external-helpers babel-plugin-transform-class-properties babel-plugin-transform-object-rest-spread
-weact
-# No app.jsx
-```
-
 
 ### JSX小程序
 ---
@@ -389,3 +379,29 @@ NPM包 | `import redux from 'redux'` | `var _redux = require("modules/redux.js")
 引用Template | `import MsgItem from './MsgItem.jsx'` | *wxml* `<import src="../MsgItem.wxml" />` 
 
 > 引用的NPM包需用npm或yarn安装 
+
+### 命令行用法 
+
+使用: weact [options] <source> <target>
+
+- source 源码目录路径或app.jsx文件路径
+- target 代码生成路径=./dist
+
+options:
+* -v, --version               显示版本 
+* -h, --help                  显示当前内容 
+* -w, --watch                 Watch源码变化，自动更新代码
+
+__例子__:
+
+- 在当前路径./dist目录下生成代码
+
+`weact examples/01.hello.world/`
+
+- 指定代码生成路径
+
+`weact examples/01.hello.world/ ./your_distribution`
+
+- watch模式, 根据源码改动，自动更新生成代码
+
+`weact -w examples/01.hello.world/`

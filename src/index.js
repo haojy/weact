@@ -1,9 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import rimraf from 'rimraf'
 import mkdirp from 'mkdirp'
 import chalk from 'chalk'
-// import chokidar from 'chokidar'
+import chokidar from 'chokidar'
 import minimist from 'minimist'
 import rollup from 'rollup'
 import rp_babel from 'rollup-plugin-babel'
@@ -26,7 +25,7 @@ const info = (type, str, ...rest) => console.log(
   chalk.cyanBright.bold(`[${INFO_TYPE[type]}]\t`),
   chalk.dim.bold(`${str}`, rest),
 )
-const command = minimist(process.argv.slice(2))
+
 
 function copyNodeModule(name, target) {
   // Let`s guess
@@ -43,7 +42,7 @@ function copyNodeModule(name, target) {
   info(type, path.relative('', nodeModuleSource))
 }
 
-async function build(input, target) {
+async function scan(input, target) {
   const inputOptions = {
     input,
     external: ['weact'],
@@ -144,16 +143,8 @@ function gen(id, modules, transformedModules, paths, referenced) {
   return transformedModules
 }
 
-(async function _build() {
-  const [sourcePath, targetPath = './dist'] = command._
-  if (!sourcePath) {
-    error('No app.jsx')
-    return
-  }
-  if (!targetPath) {
-    error('No target project path')
-    return
-  }
+
+async function build(sourcePath, targetPath) {
   const source = fs.statSync(sourcePath).isDirectory() ? path.join(sourcePath, 'app.jsx') : sourcePath
   const target = path.isAbsolute(targetPath) ? targetPath : path.resolve(targetPath)
 
@@ -163,11 +154,41 @@ function gen(id, modules, transformedModules, paths, referenced) {
     modules,
     referenced,
     main,
-  } = await build(source, target)
+  } = await scan(source, target)
   const transformedModules = {}
   const src = path.parse(path.resolve(source)).dir
 
-  // console.log('SCANNED', referenced)
+  // console.log('SCANNED', Object.keys(modules))
   gen(main, modules, transformedModules, { target, src }, referenced)
+  return modules
+}
+
+(async function () {
+  const command = minimist(process.argv.slice(2), {
+    alias: {
+      w: 'watch',
+      h: 'helper',
+    }
+  })
+  const [sourcePath, targetPath = './dist'] = command._
+
+  if (!sourcePath) {
+    error('No app.jsx')
+    return
+  } else if (!targetPath) {
+    error('No target project path')
+    return
+  }
+
+  let modules = await build(sourcePath, targetPath)
+
+  if (command.watcher) {
+    const watcher = chokidar.watch(Object.keys(modules))
+
+    watcher.on('change', async function(path) {
+      modules = await build(sourcePath, targetPath)
+      watcher.add(modules)
+    })
+  }
 
 })()

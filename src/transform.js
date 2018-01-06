@@ -201,34 +201,36 @@ const transform = ({
 
     ClassMethod: {
       enter(path) {
-        if (path.node.key.name === 'render') {
+        const methodName = path.node.key.name
+        if (methodName === 'render') {
           return
-        } else if (
-          /created|attached|ready|moved|detached/.test(path.node.key.name)
-        ) {
+        } else if (/created|attached|ready|moved|detached/.test(methodName)) {
           // Component life cycle fn.
           if (!isComponent()) return
           const fn = t.objectProperty(
-            t.identifier(path.node.key.name),
-            t.functionExpression(null, path.node.params, path.node.body)
+            t.identifier(methodName),
+            t.functionExpression(null, path.node.params, path.node.body, path.node.generator, path.node.async)
           )
           Attrs.push(fn)
         } else if (isComponent()) {
           const fn = t.objectProperty(
-            t.identifier(path.node.key.name),
-            t.functionExpression(null, path.node.params, path.node.body)
+            t.identifier(methodName),
+            t.functionExpression(null, path.node.params, path.node.body, path.node.generator, path.node.async)
           )
           Methods.push(fn)
+        // } else if (t.isClassMethod(path.node, { async: true })) {
+          // console.log('method', methodName, path.node)
         } else {
           const fn = t.objectProperty(
-            t.identifier(path.node.key.name),
-            t.functionExpression(null, path.node.params, path.node.body)
+            t.identifier(methodName),
+            t.functionExpression(null, path.node.params, path.node.body, path.node.generator, path.node.async)
           )
           Attrs.push(fn)
         }
       },
       exit(path) {
-        if (path.node.key.name === 'render') {
+        const methodName = path.node.key.name
+        if (methodName === 'render') {
           const result = path.node.body.body.find(
             x => x.type === 'ReturnStatement'
           )

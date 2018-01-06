@@ -82,7 +82,14 @@ async function scan(input, target) {
 
     }
   }
-  const bundle = await rollup.rollup(inputOptions)
+  let bundle
+  try {
+    bundle = await rollup.rollup(inputOptions)
+  } catch(err) {
+    err.SyntaxError && error(err.SyntaxError)
+    throw err
+  }
+
   const modules = {} 
   const referenced = {}
   bundle.modules.forEach(function({ id, dependencies, originalCode, resolvedIds }) {
@@ -194,19 +201,33 @@ async function build(sourcePath, targetPath) {
     return
   }
 
-  let modules = await build(sourcePath, targetPath)
-  const now = new Date
-  prompt(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] 生成${targetPath}`)
+  let modules
+  try {
+    modules = await build(sourcePath, targetPath)
+    const now = new Date
+    prompt(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] 生成${targetPath}`)
+  } catch (e) {
+    error(e)
+  }
+
 
   if (command.watch) {
-    const watcher = chokidar.watch(Object.keys(modules))
+    try {
+      const watcher = chokidar.watch(Object.keys(modules))
 
-    watcher.on('change', async function(path) {
-      modules = await build(sourcePath, targetPath)
-      const now = new Date
-      prompt(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] 更新`)
-      watcher.add(Object.keys(modules))
-    })
+      watcher.on('change', async function(path) {
+        modules = await build(sourcePath, targetPath)
+        const now = new Date
+        prompt(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] 更新`)
+        watcher.add(Object.keys(modules))
+      })
+
+      watcher.on('error', function(err) {
+        error(err)
+      })
+    } catch (e) {
+      error('因错退出监听模式') 
+    }
   }
 
 })()

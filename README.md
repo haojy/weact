@@ -193,7 +193,7 @@ export default class extends Page {
 
   handleTap() { console.log('自定义公共函数') }
 
-  // 生命周期函数
+  // 生命周期函数
   onLoad() { console.log('page index: loading...') }
   onShow() { console.log('page index: yes, I am') }
   onReady() { console.log('page index: I am ready now') }

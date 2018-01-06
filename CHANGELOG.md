@@ -9,3 +9,8 @@ weact changelog
 
 * `ADD`watch模式，自动更新生成代码
 * `ADD`命令行提示
+
+## 0.2.1
+
+* `FIX`watch模式下的错误提示
+* `FIX`类定义的async函数

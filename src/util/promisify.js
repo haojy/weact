@@ -1,3 +1,4 @@
+// modify pify@3.0.0 https://github.com/sindresorhus/pify
 const processFn = (fn, opts) =>
   function() {
     const P = opts.promiseModule
@@ -54,7 +55,7 @@ const processFn = (fn, opts) =>
     })
   }
 
-module.exports = (obj, opts) => {
+export default function promisify(obj, opts) {
   opts = Object.assign(
     {
       exclude: [/.+(Sync|Stream)$/],
@@ -90,4 +91,15 @@ module.exports = (obj, opts) => {
   }
 
   return ret
+}
+
+export function promisifyReturns(fn, include) {
+  return function(...args) {
+    const ret = fn(...args)
+    for (const key in include) {
+      const x = ret[key]
+      ret[key] = typeof x === 'function' ? promisify(x, include[key]) : x
+    }
+    return ret
+  }
 }

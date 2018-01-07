@@ -1,4 +1,3 @@
-import string from 'rollup-plugin-string'
 import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import uglify from 'rollup-plugin-uglify'
@@ -13,6 +12,6 @@ export default {
   plugins: [
     json(),
     commonjs(),
-    uglify({}, minify),
+    process.env.BUILD === 'production' ? uglify({}, minify) : false,
   ],
 }

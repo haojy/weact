@@ -26,7 +26,7 @@ export default {
         '@babel/generator',
       ]
     }),
-    // uglify({}, minify),
+    process.env.BUILD === 'production' ? uglify({}, minify) : false,
   ],
   external,
 }

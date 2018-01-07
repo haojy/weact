@@ -1,6 +1,6 @@
 {
   "name": "weact-cli",
-  "version": "0.2.2",
+  "version": "0.2.1",
   "description": "用JSX快速开发小程序",
   "main": "index.js",
   "bin": {
@@ -13,9 +13,9 @@
   "homepage": "https://github.com/haojy/weact",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "npm run build.bin && npm run build.lib",
-    "build.bin": "rollup -c rollup/cli.js && chmod a+x dist/weact-cli",
-    "build.lib": "rollup -c rollup/lib.js",
+    "build": "rm -r ./dist && npm run build.bin && npm run build.lib",
+    "build.bin": "rollup -c rollup/cli.js --environment BUILD:production && chmod a+x dist/weact-cli",
+    "build.lib": "rollup -c rollup/lib.js --environment BUILD:production",
     "test": "jest"
   },
   "jest": {
@@ -32,11 +32,12 @@
     "weact",
     "jsx",
     "小程序",
+    "微信",
     "weapp",
     "wxapp",
     "wechat",
     "weixin",
-    "minapp",
+    "miniprogram",
     "react"
   ],
   "dependencies": {

@@ -15,7 +15,6 @@ test
 
 # production
 build
-dist
 *.tgz
 
 # misc

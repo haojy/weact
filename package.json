@@ -1,10 +1,10 @@
 {
   "name": "weact-cli",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "用JSX快速开发小程序",
   "main": "index.js",
   "bin": {
-    "weact": "./bin/weact"
+    "weact": "./dist/weact-cli"
   },
   "repository": "haojy/weact",
   "bugs": {
@@ -12,11 +12,13 @@
   },
   "homepage": "https://github.com/haojy/weact",
   "scripts": {
-    "build": "rollup -c && chmod a+x bin/weact",
+    "prepublish": "npm run build",
+    "build": "npm run build.bin && npm run build.lib",
+    "build.bin": "rollup -c rollup/cli.js && chmod a+x dist/weact-cli",
+    "build.lib": "rollup -c rollup/lib.js",
     "test": "jest"
   },
   "jest": {
-    "transform": {},
     "testPathIgnorePatterns": [
       "/node_modules/",
       "test/"
@@ -42,22 +44,18 @@
     "@babel/generator": "^7.0.0-beta.35",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.36",
     "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.36",
-    "@babel/preset-env": "^7.0.0-beta.36",
     "@babel/preset-react": "^7.0.0-beta.36",
     "@babel/traverse": "^7.0.0-beta.35",
     "@babel/types": "^7.0.0-beta.35",
     "babylon": "^7.0.0-beta.35",
     "chalk": "^2.3.0",
     "chokidar": "^2.0.0",
-    "debug": "^3.1.0",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "prettify-xml": "^1.2.0",
     "rollup": "^0.53.2",
-    "rollup-plugin-babel": "^4.0.0-beta.0",
-    "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-babel": "^4.0.0-beta.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.36",
@@ -66,6 +64,7 @@
     "eslint-plugin-react": "^7.5.1",
     "jest": "^21.2.1",
     "redux": "^3.7.2",
+    "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-string": "^2.0.2",
     "rollup-plugin-uglify": "^2.0.1",

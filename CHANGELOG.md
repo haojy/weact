@@ -19,3 +19,8 @@ weact changelog
 
 * `ADD`Promise化微信小程序API
 * `FIX`watch模式下提示错误
+
+## 0.3.1
+
+* `ADD`Promise化微信小游戏API
+* `FIX`build error

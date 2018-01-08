@@ -1,6 +1,6 @@
 {
   "name": "weact-cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "用JSX快速开发小程序",
   "main": "index.js",
   "bin": {

@@ -14,3 +14,8 @@ weact changelog
 
 * `FIX`watch模式下的错误提示
 * `FIX`类定义的async函数
+
+## 0.3.0
+
+* `ADD`Promise化微信小程序API
+* `FIX`watch模式下提示错误

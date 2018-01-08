@@ -6,13 +6,14 @@
 [![License](https://img.shields.io/npm/l/weact-cli.svg)](https://github.com/haojy/weact/blob/master/LICENSE)
 
 
-weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中编写页面或组件，并把关联的JSX代码和引用包编译成小程序代码，然后在*小程序开发者工具*中调试代码。因为使用了JSX和ES标准语法，你可以轻松地把已有的JSX代码重构成小程序，当然你也可以使用喜欢的语法高亮，语法检查器等工具。支持
+weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中编写页面或组件，并把关联的JSX代码和引用包编译成小程序代码，然后在*小程序开发者工具*中调试代码。因为使用了JSX和ES标准语法，你可以轻松地把已有的JSX代码重构成小程序，当然你也可以使用喜欢的语法高亮，语法检查器等工具。最新版本[![License](https://img.shields.io/npm/v/weact-cli.svg)](https://github.com/haojy/weact/blob/master/CHANGELOG.md)支持
 
 * JSX，ES6/7标准语法
 * 单文件开发小程序模块
 * 引用NPM包
 * 自动添加组件关系
 * 在jsx文件中编写小程序样式WXSS
+* Promise化微信小程序API
 
 ## 快速上手
 
@@ -25,6 +26,8 @@ weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中�
 - [ 模版==函数式Component ](#模版==函数式Component)
 - [ 组件 ](#组件)
 - [ 引用模块 ](#引用模块)
+- [ Promise/Async ](#Promise/Async)
+- [ Promise化微信小程序API ](#Promise化微信小程序API)
 - [ 命令行用法 ](#命令行用法)
 
 
@@ -379,6 +382,42 @@ NPM包 | `import redux from 'redux'` | `var _redux = require("modules/redux.js")
 引用Template | `import MsgItem from './MsgItem.jsx'` | *wxml* `<import src="../MsgItem.wxml" />` 
 
 > 引用的NPM包需用npm或yarn安装 
+
+### Promise/Async
+
+TODO
+
+### Promise化微信小程序API
+
+weact内置了Promise化的微信小程序API, 编译后会引入*weact.js*。Promise化的规则
+
+- 接口含参数`success`和`fail`的API被Promise化，其他参数不变
+- `success`对应`Promise.resolve`，`fail`对应`Promise.reject`
+- 参数`compolete`暂不支持
+- 保留已有同步接口（Sync结尾的函数）和监听接口（以on开头的函数）
+
+
+```javascript
+import { Page, wx } from 'weact'
+
+export default class extends Page {
+  state = {
+    storage: 'nothing',
+  }
+  onLoad() {
+    // 原接口 wx.getStorage({ key, success, fail, complete })
+    wx.getStorage({ key: 'store' }) 
+    .then(rs => {
+      this.setState({ storage: rs})
+    }, err => {
+      this.setState({ storage: err.errMsg})
+    })
+  }
+  render () {
+    ...
+  }
+```
+详细API的使用参考[小程序API开发文档](https://mp.weixin.qq.com/debug/wxadoc/dev/api/)
 
 ### 命令行用法 
 

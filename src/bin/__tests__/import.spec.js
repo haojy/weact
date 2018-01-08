@@ -103,4 +103,29 @@ Page({
     expect(output.json === expected.json).toBe(true)
     expect(output.wxml === expected.wxml).toBe(true)
   })
+
+  test('import wx from weact', () => {
+    const jsx = `
+import { Page, wx } from 'weact'
+export default class extends Page {
+}
+`
+    const expected = {
+      js: code`
+var _weact = require("../modules/weact.js");
+
+Page({});
+`,
+
+    }
+    const output = transform({
+      id: path.resolve('./page.jsx'),
+      code: jsx,
+      sourcePath: './',
+    })
+    log([output, expected])
+    expect(output.js === expected.js).toBe(true)
+    expect(output.json === expected.json).toBe(true)
+    expect(output.wxml === expected.wxml).toBe(true)
+  })
 })

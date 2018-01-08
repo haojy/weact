@@ -12,8 +12,8 @@
   },
   "homepage": "https://github.com/haojy/weact",
   "scripts": {
-    "prepublish": "npm run build",
-    "build": "rm -r ./dist && npm run build.bin && npm run build.lib",
+    "prepublish": "yarn build",
+    "build": "yarn build.bin && yarn build.lib",
     "build.bin": "rollup -c rollup/cli.js --environment BUILD:production && chmod a+x dist/weact-cli",
     "build.lib": "rollup -c rollup/lib.js --environment BUILD:production",
     "test": "jest"

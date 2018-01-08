@@ -21,7 +21,7 @@
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "test/"
+      "util"
     ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true

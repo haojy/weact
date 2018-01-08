@@ -22,12 +22,13 @@ const error = (str, ...rest) => console.log(
   chalk.red.bold(`[ERR] ${str}`, rest),
 )
 const INFO_TYPE = {
-  page: '页面',
   app: '应用',
+  page: '页面',
   component: '组件',
   template: '模版',
   local_module: '模块',
   node_module: 'NPM包',
+  game: '游戏',
 }
 const info = (type, str, ...rest) => console.log(
   chalk.cyanBright.bold(`[${INFO_TYPE[type]}]\t`),
@@ -206,7 +207,7 @@ async function build(sourcePath, targetPath) {
     prompt(`weact 版本 ${version}`)
     return
   } else if (!sourcePath) {
-    prompt('请输入源码目录路径或app.jsx文件路径')
+    prompt('请输入源码目录路径或app.jsx, game.js文件路径')
     return
   } else if (!targetPath) {
     prompt('请输入生成小程序的目标路径，默认为当前目录下./dist')

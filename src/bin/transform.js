@@ -56,6 +56,9 @@ const transform = ({
   const isApp = function() {
     return output.type === 'app'
   }
+  const isGame = function() {
+    return output.type === 'game'
+  }
   const visitCSS = {
     TaggedTemplateExpression(path) {
       const { tag, quasi } = path.node
@@ -179,10 +182,17 @@ const transform = ({
             Properties[key].type = t.identifier(type)
           }
         })
-      } else if (
-        isApp() &&
-        /window|tabBar|networkTimeout|debug/.test(path.node.key.name)
-      ) {
+      } else if ( isApp() && /window|tabBar|networkTimeout|debug/.test(path.node.key.name)) {
+        const v = generate(path.node.value, {
+          concise: true,
+          comments: false,
+          jsonCompatibleStrings: true,
+        })
+          .code.replace(/'/g, '"')
+          .replace(/([A-Za-z0-9_$]*):/g, '"$1":')
+
+        JSONAttrs[path.node.key.name] = JSON.parse(v)
+      } else if ( isGame() && /deviceOrientation|showStatusBar|networkTimeout|workers/.test(path.node.key.name)) {
         const v = generate(path.node.value, {
           concise: true,
           comments: false,
@@ -293,7 +303,7 @@ const transform = ({
         if (/weact/.test(source)) {
           const weactModules = []
           path.node.specifiers.forEach(node => {
-            if (/App|Page|Component/.test(node.local.name)) return
+            if (/App|Page|Component|Game/.test(node.local.name)) return
             weactModules.push(node)
           })
           if (!weactModules.length) {
@@ -339,7 +349,7 @@ const transform = ({
           }
         }
 
-        if (superClass && /App|Page|Component/.test(superClass.name)) {
+        if (superClass && /App|Page|Component|Game/.test(superClass.name)) {
           output.type = superClass.name.toLowerCase()
         }
       },
@@ -422,10 +432,8 @@ const transform = ({
             )
           )
 
-        // console.log(998, Attrs.length)
-        if (superClass && /App|Page|Component/.test(superClass.name)) {
+        if (superClass && /App|Page|Component|Game/.test(superClass.name)) {
           // if (declaration.id) output.name = path.node.id.name
-          // console.log(997, Attrs.length)
           path.replaceWith(
             t.CallExpression(t.identifier(superClass.name), [
               t.objectExpression(Attrs),
@@ -450,7 +458,7 @@ const transform = ({
   }
 
   // .json
-  const _json = isApp()
+  const _json = isApp() || isGame()
     ? ImportPages.length
       ? Object.assign({ pages: ImportPages }, JSONAttrs)
       : Object.keys(JSONAttrs).length ? JSONAttrs : undefined

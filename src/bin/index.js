@@ -76,6 +76,7 @@ async function scan(input, target) {
           '@babel/preset-react',
         ],
         plugins: [
+          '@babel/plugin-proposal-object-rest-spread',
           '@babel/plugin-proposal-class-properties'
         ]
       }),
@@ -99,7 +100,7 @@ async function scan(input, target) {
   try {
     bundle = await rollup.rollup(inputOptions)
   } catch(err) {
-    err.SyntaxError && error(err.SyntaxError)
+    err.SyntaxError && error('??', err.SyntaxError)
     throw err
   }
 
@@ -185,7 +186,7 @@ async function build(sourcePath, targetPath) {
   const transformedModules = {}
   const src = path.parse(path.resolve(source)).dir
 
-  // console.log('SCANNED', Object.keys(modules))
+  console.log('SCANNED', Object.keys(modules))
   gen(main, modules, transformedModules, { target, src }, referenced)
   return modules
 }
@@ -239,7 +240,7 @@ async function build(sourcePath, targetPath) {
         error(err)
       })
     } catch (e) {
-      error('因错退出监听模式') 
+      error('因错退出监听模式', e) 
     }
   }
 

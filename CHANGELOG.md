@@ -24,3 +24,7 @@ weact changelog
 
 * `ADD`Promise化微信小游戏API
 * `FIX`build error
+
+## 0.3.2
+
+* `FIX` object rest spread

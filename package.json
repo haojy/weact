@@ -1,6 +1,6 @@
 {
   "name": "weact-cli",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "用JSX快速开发小程序",
   "main": "index.js",
   "bin": {
@@ -41,14 +41,15 @@
     "react"
   ],
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.35",
-    "@babel/generator": "^7.0.0-beta.35",
+    "@babel/core": "^7.0.0-beta.36",
+    "@babel/generator": "^7.0.0-beta.36",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.36",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.36",
     "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.36",
     "@babel/preset-react": "^7.0.0-beta.36",
-    "@babel/traverse": "^7.0.0-beta.35",
-    "@babel/types": "^7.0.0-beta.35",
-    "babylon": "^7.0.0-beta.35",
+    "@babel/traverse": "^7.0.0-beta.36",
+    "@babel/types": "^7.0.0-beta.36",
+    "babylon": "^7.0.0-beta.36",
     "chalk": "^2.3.0",
     "chokidar": "^2.0.0",
     "lodash": "^4.17.4",

@@ -8,7 +8,7 @@
 
 weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中编写页面或组件，并把关联的JSX代码和引用包编译成小程序代码，然后在*小程序开发者工具*中调试代码。因为使用了JSX和ES标准语法，你可以轻松地把已有的JSX代码重构成小程序，当然你也可以使用喜欢的语法高亮，语法检查器等工具。
 
-最新版本[![License](https://img.shields.io/npm/v/weact-cli.svg)](https://github.com/haojy/weact/blob/master/CHANGELOG.md)支持
+最新版本[![Version](https://img.shields.io/npm/v/weact-cli.svg)](https://github.com/haojy/weact/blob/master/CHANGELOG.md)支持
 
 * JSX，ES6/7标准语法
 * 单文件开发小程序模块

@@ -13,24 +13,28 @@ weact实现了用JSX和ES6/7来开发小程序，你可以在一个jsx文件中�
 * JSX，ES6/7标准语法
 * 单文件开发小程序模块
 * 引用NPM包
+* async/await
+* Promise化微信小程序/小游戏API
 * 自动添加组件关系
 * 在jsx文件中编写小程序样式WXSS
-* Promise化微信小程序/小游戏API
 
+> 安装包*./node_modules/weact-cli/examples/* 有使用weact的例子，也可以从https://github.com/haojy/weact-startup获取例子。
 ## 快速上手
-
-- [ 安装 ](#安装)
-- [ JSX小程序 ](#JSX小程序)
-- [ 生成小程序 ](#生成小程序)
-- [ 从JSX到WXML ](#从JSX到WXML)
-- [ App.jsx ](#App.jsx)
-- [ Page.jsx ](#Page.jsx)
-- [ 模版==函数式Component ](#模版==函数式Component)
-- [ 组件 ](#组件)
-- [ 引用模块 ](#引用模块)
-- [ Promise/Async ](#Promise/Async)
-- [ Promise化微信小程序/小游戏API ](#Promise化微信小程序/小游戏API)
-- [ 命令行用法 ](#命令行用法)
+  - [安装](#安装)
+  - [JSX小程序](#jsx小程序)
+  - [生成小程序](#生成小程序)
+## 教程
+  - [从JSX到WXML](#从jsx到wxml)
+  - [App.jsx](#appjsx)
+  - [Page.jsx](#pagejsx)
+  - [模版==函数式Component](#模版函数式component)
+  - [组件](#组件)
+    - [组件关系](#组件关系)
+    - [React组件 (TODO)](#React组件)
+  - [引用模块](#引用模块)
+  - [Promise和async/await](#promise和asyncawait)
+  - [Promise化微信小程序/小游戏API](#promise化微信小程序小游戏api)
+  - [命令行用法](#命令行用法)
 
 
 ### 安装
@@ -370,6 +374,11 @@ weact编译后在各自的js文件里自动生成关系定义，而不用手动�
     }
   },
 ```
+
+#### React组件
+
+TODO
+
 ### 引用模块
 ---
 
@@ -385,10 +394,28 @@ NPM包 | `import redux from 'redux'` | `var _redux = require("modules/redux.js")
 
 > 引用的NPM包需用npm或yarn安装 
 
-### Promise/Async
+### Promise和async/await
 ---
 
-TODO
+weact支持Promise的相关语法，也支持async/await。你可以在App和Page的类方法上使用`async`来定义异步函数，然后就可以在这函数内使用`await`来处理异步或Promise函数。为了方便用`await`方式调用微信小程序API的异步函数，weact内置的模块Promise化了这些接口，具体使用方法参考[ Promise化微信小程序/小游戏API ](#Promise化微信小程序/小游戏API)
+```javascript
+// in page.jsx
+import { wx } from 'weact'  // 引用Promise化的wx接口
+export default class extends Page {
+  async onLoad() {
+    const wait = () => new Promise((resolve, reject) => {
+      setTimeout(function() {
+        resolve('小程序')
+      }, 1000)
+    })
+    const who = await wait() // 调用自定异步函数
+    console.info(who)
+    const systemInfo = await wx.getSystemInfo() // 调用Promise化的wx接口
+    console.info(systemInfo)
+  }
+}
+```
+> async/await最终执行依赖于目标设备的支持
 
 ### Promise化微信小程序/小游戏API
 ---
@@ -397,7 +424,7 @@ weact内置了Promise化的微信小程序和小游戏的API, 编译后会引入
 
 - 接口含参数`success`和`fail`的API被Promise化，其他参数不变
 - `success`对应`Promise.resolve`，`fail`对应`Promise.reject`
-- 参数`compolete`暂不支持
+- 参数`complete`暂不支持
 - 保留已有同步接口（Sync结尾的函数）和监听接口（以on/off开头的函数）
 
 

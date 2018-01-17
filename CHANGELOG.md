@@ -28,3 +28,8 @@ weact changelog
 ## 0.3.2
 
 * `FIX` object rest spread
+
+## 0.5.0
+
+* `FIX` 无参异步函数的调研
+* `FIX` Page不支持window属性配置

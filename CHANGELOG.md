@@ -33,3 +33,7 @@ weact changelog
 
 * `FIX` 无参异步函数的调研
 * `FIX` Page不支持window属性配置
+
+## 0.6.0
+
+* `ADD` 导入CSS/Sass/Less样式文件

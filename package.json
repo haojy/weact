@@ -1,10 +1,10 @@
 {
   "name": "weact-cli",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "用JSX快速开发小程序",
   "main": "index.js",
   "bin": {
-    "weact": "./bin/weact-cli"
+    "weact": "./dist/weact-cli"
   },
   "repository": "haojy/weact",
   "bugs": {
@@ -13,8 +13,8 @@
   "homepage": "https://github.com/haojy/weact",
   "scripts": {
     "prepublish": "yarn build",
-    "build": "yarn build.cli && yarn build.lib",
-    "build.cli": "rollup -c rollup/cli.js --environment BUILD:production && chmod a+x bin/weact-cli",
+    "build": "yarn build.bin && yarn build.lib",
+    "build.bin": "rollup -c rollup/cli.js --environment BUILD:production && chmod a+x dist/weact-cli",
     "build.lib": "rollup -c rollup/lib.js --environment BUILD:production",
     "test": "jest"
   },
@@ -41,34 +41,34 @@
     "react"
   ],
   "dependencies": {
-    "@babel/generator": "^7.0.0-beta.39",
-    "@babel/template": "^7.0.0-beta.39",
-    "@babel/traverse": "^7.0.0-beta.39",
-    "@babel/types": "^7.0.0-beta.39",
-    "acorn": "^5.3.0",
-    "acorn-jsx": "^4.1.1",
-    "acorn-stage3": "^0.4.0",
-    "acorn-static-class-property-initializer": "^1.0.0",
-    "babylon": "^7.0.0-beta.39",
+    "@babel/core": "^7.0.0-beta.36",
+    "@babel/generator": "^7.0.0-beta.36",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.36",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.36",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.36",
+    "@babel/preset-react": "^7.0.0-beta.36",
+    "@babel/traverse": "^7.0.0-beta.36",
+    "@babel/types": "^7.0.0-beta.36",
+    "babylon": "^7.0.0-beta.36",
     "chalk": "^2.3.0",
-    "debug": "^3.1.0",
+    "chokidar": "^2.0.0",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "prettify-xml": "^1.2.0",
-    "rollup": "^0.55.0",
-    "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-json": "^2.3.0",
-    "rollup-plugin-node-resolve": "^3.0.2",
-    "rollup-plugin-postcss": "^1.2.5",
-    "rollup-plugin-string": "^2.0.2"
+    "rollup": "^0.53.2",
+    "rollup-plugin-babel": "^4.0.0-beta.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.36",
     "codecov": "^3.0.0",
     "eslint": "^4.14.0",
     "eslint-plugin-react": "^7.5.1",
-    "less": "^2.7.3",
-    "node-sass": "^4.7.2",
+    "jest": "^21.2.1",
+    "redux": "^3.7.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-string": "^2.0.2",
     "rollup-plugin-uglify": "^2.0.1",
     "uglify-es": "^3.2.2"
   }

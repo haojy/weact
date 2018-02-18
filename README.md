@@ -165,7 +165,7 @@ export default class extends App {
     list: [
       {
         pagePath: 'pages/index/index', // 编译后js路径
-        text: '🏠',
+        text: '�',
       },
       {
         pagePath: 'pages/page1/page1',
@@ -232,7 +232,7 @@ export default class extends Page {
 
 ### 导入样式
 
-weact支持在JSX文件中直接引用CSS/SASS/SCSS/LESS文件，所有引用的文件会被编译成单个样式文件*app.xcss*。根据具体使用的样式文件类型，安装对应的编译器
+weact支持在JSX文件中直接引用CSS/SASS/SCSS/LESS文件，所有引用的文件会被编译成单个样式文件*app.wxss*。根据具体使用的样式文件类型，安装对应的编译器
 
 样式类型 | 安装包
 ----------|-------------
